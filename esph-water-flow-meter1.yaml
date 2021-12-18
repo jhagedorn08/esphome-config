@@ -21,7 +21,7 @@ captive_portal:
 
 sensor:
   - platform: pulse_counter
-    pin: GPIO2
+    pin: GPIO5
     unit_of_measurement: 'L/min'
     id: water_usage
     name: 'Current water usage'
