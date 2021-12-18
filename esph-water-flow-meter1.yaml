@@ -1,0 +1,42 @@
+substitutions:
+  system_name: water-flow-meter
+  friendly_name: "Water Flow Meter 1"
+  device_description: "Water Flow Meter 1"
+  api_reboot_timeout: 0s
+
+packages:
+  device: !include devices/az-delivery-devkit-v4.yaml
+
+# Enable logging
+logger:
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+captive_portal:
+
+sensor:
+  - platform: pulse_counter
+    pin: GPIO2
+    unit_of_measurement: 'L/min'
+    id: water_usage
+    name: 'Current water usage'
+    update_interval: 5s
+    filters:
+      - lambda: return (x / 396); # 396 = 6,6 * 60
+  - platform: integration
+    name: "Total Water Usage"
+    unit_of_measurement: 'L'
+    sensor: water_usage
+    time_unit: min
+  - platform: integration
+    name: "Total Water MC"
+    unit_of_measurement: 'mc'
+    sensor: water_usage
+    time_unit: min
+    filters:
+      - lambda: return (x / 1000);
