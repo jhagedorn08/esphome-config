@@ -1,0 +1,81 @@
+substitutions:
+  system_name: esp-web-tools-esp32-f29670
+  friendly_name: "Water Reserve"
+  device_description: "Water Reserve Temp"
+
+packages:
+  device: !include devices/esp-wrover-kit.yaml
+
+esp32_ble_tracker:
+
+wifi:
+  ssid: !secret wifi_ext_ssid
+  password: !secret wifi_ext_password
+
+ota:
+  password: "653c6484c0c0fa5369bc6ffc039293a3"
+
+# Setup WaterTemp GPIO
+dallas:
+  - pin: GPIO23
+
+# Individual sensors
+sensor:
+  - platform: adc
+    pin: GPIO34
+    name: "${friendly_name} TDS/EC"
+    update_interval: 10s
+    unit_of_measurement: "ppm"
+    icon: "mdi:water-percent"
+    filters:
+      - lambda: return (133.42*x*x*x - 255.86*x*x + 857.39*x)*0.5;
+      
+  - platform: dallas
+    address: 0xA30301A27993DF28
+    name: "${friendly_name} Temperature #1"
+
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:DA:87:55"
+    temperature:
+      name: "Tent Temperature"
+      id: temp
+    humidity:
+      name: "Tent Humidity"
+      id: humi
+    battery_level:
+      name: "Tent Battery-Level"
+    battery_voltage:
+      name: "Tent Battery-Voltage"
+
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:CC:5A:73"
+    temperature:
+      name: "Seed Temperature"
+    humidity:
+      name: "Seed Humidity"
+    battery_level:
+      name: "Seed Battery-Level"
+    battery_voltage:
+      name: "Seed Battery-Voltage"
+
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:E8:8B:98"
+    temperature:
+      name: "Outdoor Temperature"
+    humidity:
+      name: "Outdoor Humidity"
+    battery_level:
+      name: "Outdoor Battery-Level"
+    battery_voltage:
+      name: "Outdoor Battery-Voltage"
+
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:89:9A:1C"
+    temperature:
+      name: "Indoor Temperature"
+    humidity:
+      name: "Indoor Humidity"
+    battery_level:
+      name: "Indoor Battery-Level"
+    battery_voltage:
+      name: "Indoor Battery-Voltage"
