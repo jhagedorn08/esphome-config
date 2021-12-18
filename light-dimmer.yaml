@@ -1,0 +1,201 @@
+substitutions:
+  system_name: light_dimmer
+  friendly_name: "Light Dimmer"
+  device_description: "LED Light Dimmer"
+  api_reboot_timeout: 0s
+
+packages:
+  device: !include devices/esp8266_wemos_d1_mini.yaml
+  
+api:
+  services:
+    - service: control_servo
+      variables:
+        level: float
+      then:
+        - servo.write:
+            id: my_servo
+            level: !lambda 'return level / 100.0;'
+  reboot_timeout: $api_reboot_timeout
+  
+ota:
+  password: "20a7370bf606ee14b979989c5b6cdbf0"
+
+sensor:
+  - platform: homeassistant
+    entity_id: input_number.servo_control
+    id: HAdimmer
+    internal: true
+    filters:
+      - heartbeat: 60s
+
+output:
+  - platform: esp8266_pwm
+    pin: D1
+    frequency: 50Hz
+    id: pwm_output    
+
+servo:
+  - id: my_servo
+    min_level: "2%"
+    max_level: "12.6%"
+    restore: true
+    output: pwm_output
+
+switch:
+  - platform: template
+    id: dimmer_switch_n30
+    name: "Dimmer Switch -0.30"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: -0.30
+
+  - platform: template
+    id: dimmer_switch_n20
+    name: "Dimmer Switch -0.20"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: -0.20
+
+  - platform: template
+    id: dimmer_switch_n10
+    name: "Dimmer Switch -0.10"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: -0.10
+
+  - platform: template
+    id: dimmer_switch_0
+    name: "Dimmer Switch 0.00"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.00
+
+  - platform: template
+    id: dimmer_switch_10
+    name: "Dimmer Switch 0.10"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.10
+
+  - platform: template
+    id: dimmer_switch_20
+    name: "Dimmer Switch 0.20"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.20
+
+  - platform: template
+    id: dimmer_switch_30
+    name: "Dimmer Switch 0.30"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - logger.log: "30% Turned On!"
+      - servo.write:
+          id: my_servo
+          level: 0.30
+    on_turn_off:
+      - logger.log: "30% Turned Off!"
+    
+  - platform: template
+    id: dimmer_switch_40
+    name: "Dimmer Switch 0.40"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.40
+
+  - platform: template
+    id: dimmer_switch_50
+    name: "Dimmer Switch 0.50"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.50
+
+  - platform: template
+    id: dimmer_switch_60
+    name: "Dimmer Switch 0.60"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.60
+
+  - platform: template
+    id: dimmer_switch_70
+    name: "Dimmer Switch 0.70"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.70
+
+  - platform: template
+    id: dimmer_switch_80
+    name: "Dimmer Switch 0.80"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.80
+
+  - platform: template
+    id: dimmer_switch_90
+    name: "Dimmer Switch 0.90"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 0.90
+
+  - platform: template
+    id: dimmer_switch_100
+    name: "Dimmer Switch 1.00"
+    icon: "mdi:lock"
+    optimistic: true
+    restore_state: true
+    turn_on_action:
+      - servo.write:
+          id: my_servo
+          level: 1.00
