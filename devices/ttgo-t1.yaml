@@ -1,0 +1,9 @@
+---
+# Device: ttgo-t1
+#
+packages:
+  <<: !include_dir_named ../components/common
+  board: !include ../boards/ttgo-t1.yaml
+
+# [ ] LED
+# [ ] SPI + I2C

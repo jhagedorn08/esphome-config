@@ -1,0 +1,9 @@
+---
+# Device: Wemos D1 Mini
+#
+packages:
+  <<: !include_dir_named ../components/common
+  board: !include ../boards/az-delivery-devkit-v4.yaml
+
+# [ ] LED
+# [ ] SPI + I2C
