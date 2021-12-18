@@ -1,8 +1,0 @@
----
-# ESP Wriver-Kit
-#
-#
-esphome:
-  <<: !include .esphome.yaml
-  platform: ESP32
-  board: ttgo-t1
