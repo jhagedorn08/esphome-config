@@ -1,0 +1,8 @@
+---
+# ESP Wriver-Kit
+# az-delivery-devkit-v4
+#
+esphome:
+  <<: !include .esphome.yaml
+  platform: ESP32
+  board: az-delivery-devkit-v4
