@@ -1,5 +1,5 @@
 ---
-# Device: Wemos D1 Mini
+# Device: ESP WROVER DevKit
 #
 packages:
   <<: !include_dir_named ../components/common
